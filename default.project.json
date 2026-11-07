@@ -1,0 +1,178 @@
+{
+	"name": "robgame",
+	"tree": {
+		"$className": "DataModel",
+		"ReplicatedFirst": {
+			"$path": "src/replicatedfirst"
+		},
+		"ReplicatedStorage": {
+			"Shared": {
+				"$path": "src/shared"
+			}
+		},
+		"ServerScriptService": {
+			"Server": {
+				"$path": "src/server"
+			}
+		},
+		"MaterialService": {
+			"$ignoreUnknownInstances": true,
+			"CrownviaGrass": {
+				"$className": "MaterialVariant",
+				"$properties": {
+					"BaseMaterial": "Grass",
+					"ColorMap": "rbxassetid://92047317636023",
+					"StudsPerTile": 40
+				}
+			},
+			"CrownviaRoad": {
+				"$className": "MaterialVariant",
+				"$properties": {
+					"BaseMaterial": "Sand",
+					"ColorMap": "rbxassetid://119413300606842",
+					"StudsPerTile": 6
+				}
+			},
+			"CrownviaDesert": {
+				"$className": "MaterialVariant",
+				"$properties": {
+					"BaseMaterial": "Sandstone",
+					"ColorMap": "rbxassetid://138401512309356",
+					"StudsPerTile": 30
+				}
+			},
+			"CrownviaGravel": {
+				"$className": "MaterialVariant",
+				"$properties": {
+					"BaseMaterial": "Slate",
+					"ColorMap": "rbxassetid://93444598545336",
+					"StudsPerTile": 20
+				}
+			},
+			"CrownviaForest": {
+				"$className": "MaterialVariant",
+				"$properties": {
+					"BaseMaterial": "LeafyGrass",
+					"ColorMap": "rbxassetid://84094059162058",
+					"StudsPerTile": 24
+				}
+			},
+			"CrownviaGrassOwn": {
+				"$className": "MaterialVariant",
+				"$properties": {
+					"BaseMaterial": "Grass",
+					"ColorMap": "rbxassetid://77762691861585",
+					"StudsPerTile": 24
+				}
+			},
+			"CrownviaGrassEnemy": {
+				"$className": "MaterialVariant",
+				"$properties": {
+					"BaseMaterial": "Grass",
+					"ColorMap": "rbxassetid://117829075276479",
+					"StudsPerTile": 24
+				}
+			},
+			"CrownviaGrassAlly": {
+				"$className": "MaterialVariant",
+				"$properties": {
+					"BaseMaterial": "Grass",
+					"ColorMap": "rbxassetid://103637707470858",
+					"StudsPerTile": 24
+				}
+			},
+			"CrownviaForestOwn": {
+				"$className": "MaterialVariant",
+				"$properties": {
+					"BaseMaterial": "LeafyGrass",
+					"ColorMap": "rbxassetid://104872937768689",
+					"StudsPerTile": 24
+				}
+			},
+			"CrownviaForestEnemy": {
+				"$className": "MaterialVariant",
+				"$properties": {
+					"BaseMaterial": "LeafyGrass",
+					"ColorMap": "rbxassetid://104248288602949",
+					"StudsPerTile": 24
+				}
+			},
+			"CrownviaForestAlly": {
+				"$className": "MaterialVariant",
+				"$properties": {
+					"BaseMaterial": "LeafyGrass",
+					"ColorMap": "rbxassetid://78082037272859",
+					"StudsPerTile": 24
+				}
+			},
+			"CrownviaDesertOwn": {
+				"$className": "MaterialVariant",
+				"$properties": {
+					"BaseMaterial": "Sandstone",
+					"ColorMap": "rbxassetid://99988068539527",
+					"StudsPerTile": 30
+				}
+			},
+			"CrownviaDesertEnemy": {
+				"$className": "MaterialVariant",
+				"$properties": {
+					"BaseMaterial": "Sandstone",
+					"ColorMap": "rbxassetid://93375237853789",
+					"StudsPerTile": 30
+				}
+			},
+			"CrownviaDesertAlly": {
+				"$className": "MaterialVariant",
+				"$properties": {
+					"BaseMaterial": "Sandstone",
+					"ColorMap": "rbxassetid://135373906843223",
+					"StudsPerTile": 30
+				}
+			},
+			"CrownviaGravelOwn": {
+				"$className": "MaterialVariant",
+				"$properties": {
+					"BaseMaterial": "Slate",
+					"ColorMap": "rbxassetid://91231499656275",
+					"StudsPerTile": 20
+				}
+			},
+			"CrownviaGravelEnemy": {
+				"$className": "MaterialVariant",
+				"$properties": {
+					"BaseMaterial": "Slate",
+					"ColorMap": "rbxassetid://101004339927940",
+					"StudsPerTile": 20
+				}
+			},
+			"CrownviaGravelAlly": {
+				"$className": "MaterialVariant",
+				"$properties": {
+					"BaseMaterial": "Slate",
+					"ColorMap": "rbxassetid://101681447041305",
+					"StudsPerTile": 20
+				}
+			}
+		},
+		"StarterPlayer": {
+			"$properties": {
+				"DevTouchMovementMode": "Scriptable",
+				"DevComputerMovementMode": "Scriptable"
+			},
+			"StarterPlayerScripts": {
+				"Client": {
+					"$path": "src/client"
+				}
+			}
+		},
+		"Workspace": {
+			"$className": "Workspace",
+			"$properties": {},
+			"Terrain": {
+				"$properties": {
+					"Decoration": false
+				}
+			}
+		}
+	}
+}
