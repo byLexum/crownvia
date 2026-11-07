@@ -4,10 +4,11 @@
 -- Canlı skor tablosu (sağ üst, ayarların altında). Kaynak: kodiak `LeaderboardOverlay`;
 -- Kiomet'te yalnız hayattayken gösterilir (`liveboard={props.alive && !nexus}`).
 -- İlk 10 + oyuncu ilk 10'da değilse kendi satırı ("your score").
--- Haritayı kapatmasın diye ilk 3 + oyuncunun kendi sırası görünür; başlığa dokununca kaynaktaki
--- gibi ilk 10 açılır.
+-- Bilgisayarda ilk 10 açık başlar (kaynaktaki gibi). Dokunmatik ekranda haritayı kapatmasın diye
+-- ilk 3 + oyuncunun kendi sırası; başlıktaki ok açılıp kapandığını gösterir.
 
 local Players = game:GetService("Players")
+local UserInputService = game:GetService("UserInputService")
 
 local Cosmetics = require(script.Parent.Cosmetics)
 local Icons = require(script.Parent.Icons)
@@ -36,7 +37,7 @@ end
 local panel: Frame? = nil
 local rows: { Row } = {}
 local youRow: Row? = nil
-local expanded = false
+local expanded = not UserInputService.TouchEnabled
 
 local function row(parent: Instance, order: number): Row
 	local frame = Kit.box(parent, UDim2.new(1, 0, 0, ROW_HEIGHT), order)
@@ -169,10 +170,14 @@ function Leaderboard.init()
 	head.Parent = frame
 	Kit.list(head, { horizontal = true, gap = 6, alignY = Enum.VerticalAlignment.Center })
 	Kit.icon(head, Icons.ui.trophy, 30, 1)
-	local title = Kit.text(head, Strings.leaderboard, "label", nil, UDim2.new(1, -36, 1, 0), 2)
+	local title = Kit.text(head, Strings.leaderboard, "label", nil, UDim2.new(1, -66, 1, 0), 2)
 	title.TextSize = 18
+	local arrow = Kit.text(head, "", "label", Theme.colors.muted, UDim2.new(0, 24, 1, 0), 3)
+	arrow.TextXAlignment = Enum.TextXAlignment.Center
+	arrow.Text = if expanded then "▲" else "▼"
 	head.Activated:Connect(function()
 		expanded = not expanded
+		arrow.Text = if expanded then "▲" else "▼"
 		local message = lastMessage
 		if message then
 			Leaderboard.apply(message)
