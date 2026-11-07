@@ -93,6 +93,7 @@ local function grant(
 			Enum.AnalyticsEconomyTransactionType.IAP,
 			pack.key
 		)
+		Analytics.shop(player, 4)
 		local send = sendRef
 		if send then
 			send(player, { kind = "PurchaseResult", credits = pack.credits })
@@ -144,6 +145,7 @@ function PurchaseService.start(send: Send)
 				owned[pass.key] = true
 			end
 			InventoryService.markDirty()
+			Analytics.shop(player, 4)
 			Profiles.mutate(player, function() end)
 			send(player, { kind = "PurchaseResult", item = pass.item })
 		end

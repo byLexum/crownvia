@@ -491,6 +491,11 @@ function LoadingScreen.load(items: { any })
 	end
 end
 
+-- Ana yükleme ekranı hâlâ ekranda mı (pencereler onu beklesin).
+function LoadingScreen.isShowing(): boolean
+	return current ~= nil
+end
+
 function LoadingScreen.hide()
 	local built = current
 	if built == nil then

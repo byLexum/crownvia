@@ -31,6 +31,29 @@ function Analytics.event(player: Player, name: string)
 	end)
 end
 
+-- Mağaza hunisi (Creator Hub > Analytics > Funnels > Shop): mağazayı açtı → ürüne baktı →
+-- satın almaya bastı → aldı. Her mağaza açılışı yeni oturumdur; Roblox adımları oturum içinde sayar.
+-- 1–3 istemciden (`ShopStep`), 4 yalnız sunucuda teslim başarılı olunca. Satış kuralına dokunmaz.
+local HttpService = game:GetService("HttpService")
+
+Analytics.SHOP_STEPS = { "OpenedStore", "ViewedItem", "StartedPurchase", "Purchased" }
+local shopSession: { [Player]: string } = {}
+
+function Analytics.shop(player: Player, step: number)
+	local name = Analytics.SHOP_STEPS[step]
+	if name == nil then
+		return
+	end
+	local session = shopSession[player]
+	if step == 1 or session == nil then
+		session = HttpService:GenerateGUID(false)
+		shopSession[player] = session
+	end
+	pcall(function()
+		AnalyticsService:LogFunnelStepEvent(player, "Shop", session, step, name)
+	end)
+end
+
 -- Ekonomi panosu (Creator Hub > Analytics > Economy): Credits nereden geliyor, nereye gidiyor.
 -- `amount` pozitif; yön `source` ile. `transaction`: Enum.AnalyticsEconomyTransactionType adı
 -- (Gameplay, IAP, Shop). `sku`: olay türü ya da eşya kimliği.
@@ -71,6 +94,7 @@ function Analytics.start()
 	end
 	Players.PlayerRemoving:Connect(function(player)
 		reached[player] = nil
+		shopSession[player] = nil
 	end)
 end
 

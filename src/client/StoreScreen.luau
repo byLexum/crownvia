@@ -87,6 +87,7 @@ local function listRow(parent: Instance, order: number, item: Catalog.Item)
 	end
 	row.Activated:Connect(function()
 		selected = item.id
+		AccountView.shopStep(2)
 		render()
 	end)
 end
@@ -168,6 +169,7 @@ local function detail(parent: Frame, item: Catalog.Item, profile: AccountView.Pr
 			options.text = string.format(Strings.needCredits, price - profile.credits)
 		end
 		options.onClick = function()
+			AccountView.shopStep(3)
 			AccountView.buy(item.id)
 		end
 	elseif item.pass then
@@ -178,6 +180,7 @@ local function detail(parent: Frame, item: Catalog.Item, profile: AccountView.Pr
 		options.variant = "green"
 		options.enabled = available
 		options.onClick = function()
+			AccountView.shopStep(3)
 			AccountView.promptPass(key)
 		end
 	else
@@ -216,6 +219,7 @@ local function packCard(parent: Instance, order: number, count: number, pack: Pr
 		textSize = 22,
 		enabled = available,
 		onClick = function()
+			AccountView.shopStep(3)
 			AccountView.promptCreditPack(key)
 		end,
 	})
@@ -289,6 +293,9 @@ function StoreScreen.init()
 	tabs = Kit.tabs(m.body, { Strings.cosmetics, Strings.creditPacks }, function(index: number)
 		(cosmeticsPage :: Frame).Visible = index == 1
 		(creditsPage :: Frame).Visible = index == 2
+		if index == 2 then
+			AccountView.shopStep(2)
+		end
 	end, 0)
 
 	local page = Kit.box(m.body, UDim2.new(1, 0, 1, -64))
@@ -329,7 +336,9 @@ function StoreScreen.open(itemId: string?)
 	end
 	render()
 	m.open()
+	AccountView.shopStep(1)
 	if itemId then
+		AccountView.shopStep(2)
 		task.defer(function()
 			local list = listFrame
 			local row = list and list:FindFirstChild(itemId)

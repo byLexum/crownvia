@@ -245,7 +245,7 @@ function Rewards.onScore(profile: ProfileData.Profile, score: number): { Event }
 	return events
 end
 
--- Günün ilk doğuşu: seri ilerler ve ödülü verilir. `yesterday` bir önceki UTC günü.
+-- Günün ilk girişi (profil hazır olunca): seri ilerler ve ödülü verilir. `yesterday` bir önceki UTC günü.
 function Rewards.onDayPlayed(
 	profile: ProfileData.Profile,
 	day: string,

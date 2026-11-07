@@ -35,6 +35,8 @@ local KNOWN_KINDS = {
 	SetTutorialDone = true,
 	SetSupplyLine = true,
 	SetViewport = true,
+	-- Mağaza hunisi adımı (yalnız analitik): `InventoryService`.
+	ShopStep = true,
 	Spawn = true,
 	Upgrade = true,
 	-- Genel sunucu listesinden katılma (oyun kuralı değil): `PartyService`.

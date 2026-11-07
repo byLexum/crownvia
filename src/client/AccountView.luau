@@ -13,6 +13,7 @@ local Products = require(Account:WaitForChild("Products"))
 local Audio = require(script.Parent.Audio)
 local Cosmetics = require(script.Parent.Cosmetics)
 local DeathScreen = require(script.Parent.DeathScreen)
+local DailyCalendar = require(script.Parent.DailyCalendar)
 local Hype = require(script.Parent.Hype)
 local Icons = require(script.Parent.Icons)
 local Kit = require(script.Parent.Kit)
@@ -169,6 +170,13 @@ function AccountView.setGraphics(low: boolean)
 	end
 end
 
+-- Mağaza hunisi adımı (1 açtı, 2 ürüne baktı, 3 satın almaya bastı); yalnız analitik.
+function AccountView.shopStep(step: number)
+	if sendCommand then
+		sendCommand({ kind = "ShopStep", step = step })
+	end
+end
+
 -- Credits ile satın al (sunucu doğrular; sonuç `InventoryResult`).
 function AccountView.buy(itemId: string)
 	if sendCommand then
@@ -269,12 +277,7 @@ function AccountView.reward(message: any)
 			doubled = event.doubled == true,
 		})
 	elseif event.kind == "streak" and type(event.reward) == "number" then
-		if type(event.chest) == "number" then
-			Hype.chest(tonumber(event.day) or event.count, event.reward + event.chest)
-		else
-			toast(string.format(Strings.streakReward, event.count, event.reward), Icons.ui.coin)
-			Audio.play("upgrade")
-		end
+		DailyCalendar.show(tonumber(event.count) or 1)
 	elseif event.kind == "king" and type(event.reward) == "number" then
 		Hype.kingSlain(event.reward)
 	elseif event.kind == "revenge" and type(event.reward) == "number" then

@@ -126,6 +126,14 @@ function InventoryService.start(send: Send): { [string]: (Player, { [string]: an
 			end)
 			return nil
 		end,
+		ShopStep = function(player: Player, payload): string?
+			local step = payload.step
+			if type(step) ~= "number" or step ~= math.floor(step) or step < 1 or step > 3 then
+				return "malformed command"
+			end
+			Analytics.shop(player, step)
+			return nil
+		end,
 		BuyItem = function(player: Player, payload): string?
 			local itemId = payload.item
 			if type(itemId) ~= "string" or #itemId > 64 then
@@ -151,6 +159,7 @@ function InventoryService.start(send: Send): { [string]: (Player, { [string]: an
 					Enum.AnalyticsEconomyTransactionType.Shop,
 					itemId
 				)
+				Analytics.shop(player, 4)
 			end
 			result(player, "buy", itemId, err)
 			return err

@@ -57,6 +57,8 @@ local activity: { [Player]: { last: number, seconds: number } } = {}
 local dirty: { [Player]: boolean } = {}
 local sendTimer = 0
 local sendRef: Send? = nil
+-- Günlük giriş ödülünün bu oturumda verildiği gün.
+local dayGranted: { [Player]: string } = {}
 
 local function tracker(player: Player): Tracker
 	local t = trackers[player]
@@ -206,6 +208,7 @@ function AccountRewards.start(send: Send)
 		trackers[player] = nil
 		dirty[player] = nil
 		activity[player] = nil
+		dayGranted[player] = nil
 	end)
 end
 
@@ -286,14 +289,6 @@ function AccountRewards.step(sim: Game.Game, simIds: { [Player]: number }, dt: n
 					t.combo = 0
 					t.lifeTowers = {}
 					t.known = copySet(data.towers)
-					local now = os.time()
-					apply(player, function(profile)
-						return Rewards.onDayPlayed(
-							profile,
-							Rewards.dayOf(now),
-							Rewards.dayOf(now - 86400)
-						)
-					end)
 				else
 					for id in data.towers do
 						if not t.known[id] then
@@ -348,6 +343,17 @@ function AccountRewards.step(sim: Game.Game, simIds: { [Player]: number }, dt: n
 				end
 				finishLife(player, t)
 			end
+		end
+	end
+	-- Günlük giriş ödülü: profil hazır olunca, günde bir (gün dönerse oyundayken de verilir).
+	local today = Rewards.dayOf(os.time())
+	for _, player in Players:GetPlayers() do
+		if dayGranted[player] ~= today and Profiles.get(player) ~= nil then
+			dayGranted[player] = today
+			local now = os.time()
+			apply(player, function(profile)
+				return Rewards.onDayPlayed(profile, today, Rewards.dayOf(now - 86400))
+			end)
 		end
 	end
 	sendTimer += dt
